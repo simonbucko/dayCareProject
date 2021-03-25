@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/children")
 public class ChildrenController {
 
     @Autowired
@@ -19,19 +19,19 @@ public class ChildrenController {
     @Autowired
     ChildrenRepository childrenRepository;
 
-    @GetMapping(value = "/children")
+    @GetMapping(value = "/")
     public List<Children> getChildren(){
         return childrenRepository.findAll();
     }
 
-    @PostMapping(value = "/children")
+    @PostMapping(value = "/")
     public List<Children> insertChild(@RequestBody final Children child){
         String SQL = "INSERT INTO children (name,age,address,phone_number,email) VALUE ( '" +child.getName()+"',"+child.getAge()+",'"+child.getAddress()+"','"+child.getPhoneNumber()+"','"+child.getEmail()+"')";
         jdbcTemplate.execute(SQL);
         return childrenRepository.findAll();
     }
 
-    @DeleteMapping(value="/children/{id}")
+    @DeleteMapping(value="/{id}")
     public List<Children> deleteChild(@PathVariable(value="id") String id){
         String SQL = "DELETE FROM children WHERE id="+id;
         jdbcTemplate.execute(SQL);
