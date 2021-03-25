@@ -1,7 +1,9 @@
 package com.project.daycare.api;
 
 import com.project.daycare.module.Children;
+import com.project.daycare.module.Payment;
 import com.project.daycare.repository.ChildrenRepository;
+import com.project.daycare.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ public class api {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-x
+
     @Autowired
     ChildrenRepository childrenRepository;
+    @Autowired
+    PaymentRepository paymentRepository;
 
     @GetMapping(value = "/children")
     public List<Children> getChildren(){
@@ -44,5 +48,10 @@ x
 //        System.out.println(SQL);
         jdbcTemplate.execute(SQL);
         return childrenRepository.findAll();
+    }
+
+    @GetMapping(value = "/payment")
+    public List<Payment> getPayment(){
+        return paymentRepository.findAll();
     }
 }
