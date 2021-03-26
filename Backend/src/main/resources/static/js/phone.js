@@ -1,20 +1,20 @@
-const URL = 'http://localhost:8080/api/payment';
+const URL = 'http://localhost:8080/api/children';
 const tableBody = document.querySelector('#tableBody');
 const loader = document.querySelector('.spinner-border');
-const createForm = document.querySelector('#add_payment');
-const updateForm = document.querySelector('#update_payment_form');
+const createForm = document.querySelector('#add_child_form');
+const updateForm = document.querySelector('#update_child_form');
 const buttonClose = document.querySelectorAll('.btn-close');
-let payments = [];
+let children = [];
 
 //handling submiting post the form
 createForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const data = {
-        member_id: createForm.parent_id.value,
-        amount: createForm.amount.value,
-        due: createForm.due.value,
-        paid: createForm.paid.value,
-        description: createForm.description.value
+        name: createForm.name.value,
+        age: createForm.age.value,
+        address: createForm.address.value,
+        phoneNumber: createForm.phoneNumber.value,
+        email: createForm.email.value
     }
     fetch(URL, {
         method: 'POST',
@@ -25,9 +25,8 @@ createForm.addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             generateHtml(data);
-            payments = data;
+            children = data;
             createForm.reset();
             buttonClose[0].click();
         })
@@ -38,11 +37,11 @@ updateForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const data = {
         id: updateForm.id.value,
-        member_id: updateForm.parent_id_update.value,
-        amount: updateForm.amount_update.value,
-        due: updateForm.due_update.value,
-        paid: updateForm.paid_update.value,
-        description: updateForm.description_update.value
+        name: updateForm.name.value,
+        age: updateForm.age.value,
+        address: updateForm.address.value,
+        phoneNumber: updateForm.phoneNumber.value,
+        email: updateForm.email.value
     }
     fetch(URL, {
         method: 'PUT',
@@ -54,7 +53,7 @@ updateForm.addEventListener('submit', (e) => {
         .then(response => response.json())
         .then(data => {
             generateHtml(data);
-            payments = data;
+            children = data;
             updateForm.reset();
             buttonClose[1].click();
         })
@@ -78,42 +77,41 @@ tableBody.addEventListener('click', (e) => {
     }
     //editing
     if (e.target.classList.contains('fa-user-edit')) {
-        const payment_id = e.target.getAttribute('data-id');
-        const { id, member_id, amount, due, paid, description } = payments[payment_id]
-        updateForm.parent_id_update.value = member_id;
-        updateForm.amount_update.value = amount;
-        updateForm.due_update.value = due;
-        updateForm.paid_update.value = paid;
-        updateForm.description_update.value = description;
+        const child_id = e.target.getAttribute('data-id');
+        const { id, name, age, phoneNumber, email, address } = children[child_id]
+        updateForm.name.value = name;
+        updateForm.age.value = age;
+        updateForm.phoneNumber.value = phoneNumber;
+        updateForm.email.value = email;
+        updateForm.address.value = address;
         updateForm.id.value = id;
     }
 })
 
-const getAllPayments = () => {
+const getAllChildren = () => {
     fetch(URL)
         .then(response => response.json())
         .then(data => {
             generateHtml(data);
-            payments = data;
+            children = data;
         })
         .catch(error => console.log(error));
 }
 
-getAllPayments();
+getAllChildren();
 
 const generateHtml = (data) => {
     let HTML = ``;
-    data.forEach((payment, i) => {
+    data.forEach((child, i) => {
         HTML += `
-        <tr data-id="${payment.id}">
-
+        <tr data-id="${child.id}">
             <th scope="row">${i + 1}</th>
-            <td>${payment.member_id}</td>
-            <td>${payment.amount}</td>
-            <td>${payment.due}</td>
-            <td>${payment.paid}</td>
-            <td>${payment.description}</td>
-            <td><i class="fas fa-user-edit" data-id="${i}" data-bs-toggle="modal" data-bs-target="#editModal"></i><i class="fas fa-trash" data-id="${payment.id}"></i></td>
+            <td>${child.name}</td>
+            <td>${child.age}</td>
+            <td>${child.address}</td>
+            <td>${child.phoneNumber}</td>
+            <td>${child.email}</td>
+            <td><i class="fas fa-user-edit" data-id="${i}" data-bs-toggle="modal" data-bs-target="#editModal"></i><i class="fas fa-trash" data-id="${child.id}"></i></td>
         </tr>
         `
     });
@@ -125,6 +123,3 @@ const generateHtml = (data) => {
     loader.style.display = 'none';
     tableBody.innerHTML = HTML;
 }
-
-
-

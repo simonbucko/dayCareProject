@@ -1,8 +1,11 @@
 package com.project.daycare.module;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Date;
 
 @Entity
 public class Payment {
@@ -12,8 +15,8 @@ public class Payment {
     private Integer fee_type;
     private Integer member_id;
     private Integer amount;
-    private String due;
-    private String paid;
+    private Date due;
+    private Date paid;
     private String description;
 
     public Integer getFee_type() {
@@ -40,19 +43,19 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getDue() {
+    public Date getDue() {
         return due;
     }
 
-    public void setDue(String due) {
+    public void setDue(Date due) {
         this.due = due;
     }
 
-    public String getPaid() {
+    public Date getPaid() {
         return paid;
     }
 
-    public void setPaid(String paid) {
+    public void setPaid(Date paid) {
         this.paid = paid;
     }
 

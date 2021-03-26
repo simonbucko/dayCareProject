@@ -54,4 +54,23 @@ public class api {
     public List<Payment> getPayment(){
         return paymentRepository.findAll();
     }
+    @PostMapping(value = "/payment")
+    public List<Payment> insertPayment(@RequestBody final Payment payment){
+        String SQL = "INSERT INTO payment (member_id,amount,paid,description,due) VALUE ( '" +payment.getMember_id()+"',"+payment.getAmount()+",'"+payment.getPaid()+"','"+payment.getDescription()+"','"+payment.getDue()+"')";
+        jdbcTemplate.execute(SQL);
+        return paymentRepository.findAll();
+    }
+    @DeleteMapping(value="/payment/{id}")
+    public List<Payment> deletePayment(@PathVariable(value="id") String id){
+        String SQL = "DELETE FROM payment WHERE id="+id;
+        jdbcTemplate.execute(SQL);
+        return paymentRepository.findAll();
+    }
+    @PutMapping(value="/payment")
+    public List<Payment> updatePayment(@RequestBody final Payment payment){
+        String SQL = "UPDATE payment SET member_id = '" +payment.getMember_id()+"',amount = "+payment.getAmount()+",due='"+payment.getDue()+"',paid='"+payment.getPaid()+"',description='"+payment.getDescription()+"' WHERE id=" +payment.getId();
+
+        jdbcTemplate.execute(SQL);
+        return paymentRepository.findAll();
+    }
 }
