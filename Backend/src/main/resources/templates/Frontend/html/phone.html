@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Children Table</title>
+    <title>Phone List Table</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
     <link
             rel="stylesheet"
@@ -25,11 +25,10 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Age</th>
-            <th scope="col">Address</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Register Date</th>
             <th scope="col">Phone Number</th>
-            <th scope="col">Email</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -44,36 +43,35 @@
     </div>
 </div>
 
-<!-- Modal for creating a child -->
+<!-- Modal for adding a phone number -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Child</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add New phone number</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="add_child_form">
+                <form id="add_phone_form">
+                    <input type="number" id="id" hidden>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <label for="parentFirstName" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="parentFirstName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="age" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="age" required>
+                        <label for="parentLastName" class="form-label">Last name</label>
+                        <input type="text" class="form-control" id="parentLastName" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" required>
+                    <div class="mb-3" hidden>
+                        <label for="registerDate" class="form-label">Register Date</label>
+                        <input type="text" class="form-control" id="registerDate" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="phoneNumber" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phoneNumber" required>
+                        <input type="number" class="form-control" id="phoneNumber" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" required>
-                    </div>
+
+
 
                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                 </form>
@@ -82,38 +80,33 @@
     </div>
 </div>
 
-<!-- Modal for updating the child -->
+<!-- Modal for updating the phone number list -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Child</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit phone number list</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="update_child_form">
+                <form id="update_phone_form">
                     <input type="number" id="id" hidden>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <label for="parentFirstName" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="parentFirstName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="age" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="age" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" required>
+                        <label for="parentLastName" class="form-label">Last name</label>
+                        <input type="text" class="form-control" id="parentLastName" required>
                     </div>
                     <div class="mb-3">
                         <label for="phoneNumber" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phoneNumber" required>
+                        <input type="number" class="form-control" id="phoneNumber" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" required>
+                    <div class="mb-3" hidden>
+                        <label for="registerDate" class="form-label">Register Date</label>
+                        <input type="text" class="form-control" id="registerDate" disabled>
                     </div>
-
                     <button type="submit" class="btn btn-primary">UPDATE</button>
                 </form>
             </div>

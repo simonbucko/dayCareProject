@@ -1,21 +1,25 @@
-const URL = 'http://localhost:8080/api/children';
+const URL = 'http://localhost:8080/api/phonelist';
 const tableBody = document.querySelector('#tableBody');
 const loader = document.querySelector('.spinner-border');
-const createForm = document.querySelector('#add_child_form');
-const updateForm = document.querySelector('#update_child_form');
+const createForm = document.querySelector('#add_phone_form');
+const updateForm = document.querySelector('#update_phone_form');
 const buttonClose = document.querySelectorAll('.btn-close');
-let children = [];
-
+let phoneDetails = [];
+const d = new Date()
+const today = d.toISOString().slice(0, 10)
 //handling submiting post the form
+createForm.registerDate.value = today
 createForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const data = {
-        name: createForm.name.value,
-        age: createForm.age.value,
-        address: createForm.address.value,
+        parentFirstName: createForm.parentFirstName.value,
+        parentLastName:createForm.parentLastName.value,
+        registerDate:createForm.registerDate.value,
         phoneNumber: createForm.phoneNumber.value,
-        email: createForm.email.value
+
     }
+    console.log(data)
     fetch(URL, {
         method: 'POST',
         headers: {
@@ -26,7 +30,7 @@ createForm.addEventListener('submit', (e) => {
         .then(response => response.json())
         .then(data => {
             generateHtml(data);
-            children = data;
+            phoneDetails = data;
             createForm.reset();
             buttonClose[0].click();
         })
@@ -37,11 +41,11 @@ updateForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const data = {
         id: updateForm.id.value,
-        name: updateForm.name.value,
-        age: updateForm.age.value,
-        address: updateForm.address.value,
+        parentFirstName: updateForm.parentFirstName.value,
+        parentLastName: updateForm.parentLastName.value,
         phoneNumber: updateForm.phoneNumber.value,
-        email: updateForm.email.value
+        registerDate:updateForm.registerDate.value,
+
     }
     fetch(URL, {
         method: 'PUT',
@@ -53,7 +57,7 @@ updateForm.addEventListener('submit', (e) => {
         .then(response => response.json())
         .then(data => {
             generateHtml(data);
-            children = data;
+            phoneDetails = data;
             updateForm.reset();
             buttonClose[1].click();
         })
@@ -77,41 +81,44 @@ tableBody.addEventListener('click', (e) => {
     }
     //editing
     if (e.target.classList.contains('fa-user-edit')) {
-        const child_id = e.target.getAttribute('data-id');
-        const { id, name, age, phoneNumber, email, address } = children[child_id]
-        updateForm.name.value = name;
-        updateForm.age.value = age;
+        const phone_id = e.target.getAttribute('data-id');
+
+
+        const { id, parentFirstName,parentLastName, phoneNumber } = phoneDetails[phone_id]
+        updateForm.parentFirstName.value = parentFirstName;
+        updateForm.parentLastName.value = parentLastName;
         updateForm.phoneNumber.value = phoneNumber;
-        updateForm.email.value = email;
-        updateForm.address.value = address;
         updateForm.id.value = id;
+        updateForm.registerDate.value = today;
+        // console.log(phoneDetails[phone_id].registerDate)
+
     }
 })
 
-const getAllChildren = () => {
+const getALlPhoneDetails = () => {
     fetch(URL)
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             generateHtml(data);
-            children = data;
+            phoneDetails = data;
         })
         .catch(error => console.log(error));
 }
 
-getAllChildren();
+getALlPhoneDetails();
 
 const generateHtml = (data) => {
     let HTML = ``;
-    data.forEach((child, i) => {
+    data.forEach((phoneList, i) => {
         HTML += `
-        <tr data-id="${child.id}">
+        <tr data-id="${phoneList.id}">
             <th scope="row">${i + 1}</th>
-            <td>${child.name}</td>
-            <td>${child.age}</td>
-            <td>${child.address}</td>
-            <td>${child.phoneNumber}</td>
-            <td>${child.email}</td>
-            <td><i class="fas fa-user-edit" data-id="${i}" data-bs-toggle="modal" data-bs-target="#editModal"></i><i class="fas fa-trash" data-id="${child.id}"></i></td>
+            <td>${phoneList.parentFirstName}</td>
+            <td>${phoneList.parentLastName}</td>
+            <td>${phoneList.registerDate}</td>
+            <td>${phoneList.phoneNumber}</td>
+            <td><i class="fas fa-user-edit" data-id="${i}" data-bs-toggle="modal" data-bs-target="#editModal"></i><i class="fas fa-trash" data-id="${phoneList.id}"></i></td>
         </tr>
         `
     });

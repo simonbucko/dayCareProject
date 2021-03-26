@@ -1,13 +1,11 @@
 package com.project.daycare.repository;
 
-import com.project.daycare.module.Children;
+import com.project.daycare.module.Child;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
 
 import java.util.List;
 
-public interface ChildrenRepository extends JpaRepository<Children,Integer> {
+public interface ChildrenRepository extends JpaRepository<Child,Integer> {
     @Override
-    List<Children> findAll();
+    List<Child> findAll();
 }

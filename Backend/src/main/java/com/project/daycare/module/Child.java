@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Children {
+public class Child {
     @Id
     @GeneratedValue
     private Integer id;
@@ -15,7 +15,7 @@ public class Children {
     private String phoneNumber;
     private String email;
 
-    public Children(){};
+    public Child(){};
 
     public Integer getId() {
         return id;
